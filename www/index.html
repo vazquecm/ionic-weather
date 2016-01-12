@@ -16,19 +16,34 @@
     <script src="lib/ionic/js/ionic.bundle.js"></script>
 
     <!-- cordova script (this will be a 404 during development) -->
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="lib/ngCordova/dist/ng-cordova.js"></script>
     <script src="cordova.js"></script>
+
+<!-- skycon scripts -->
+    <script src="lib/skycons/skycons.js"></script>
+    <script src="lib/angular-skycons/angular-skycons.js"></script>
 
     <!-- your app's js -->
     <script src="js/app.js"></script>
+
   </head>
   <body ng-app="starter">
 
     <ion-pane>
       <ion-header-bar class="bar-stable">
-        <h1 class="title">Ionic Blank Starter</h1>
+        <h1 class="title">Ionic Weather App</h1>
       </ion-header-bar>
-      <ion-content>
+      <ion-content ng-controller="weatherCtrl as weather">
+      <ion-nav-view>
+          <div id="homePage">
+            <h1>{{ weather.temp }}°F</h1>
+            <h1>{{ weatherImage }}</h1>
+            <skycon icon="CurrentWeather.forecast.icon" size="CurrentWeather.forecast.iconSize"></skycon>
+          </div>
+        </ion-nav-view>
       </ion-content>
     </ion-pane>
+
   </body>
 </html>
