@@ -3,14 +3,49 @@
 #homePage {
 	text-align: center;
 }
-/* icons */
 
-/* can be clear-day, clear-night, rain, snow, sleet, wind, fog, cloudy, partly-cloudy-day, or partly-cloudy-night */
+/* icons can be clear-day, clear-night, rain, snow, sleet, wind, fog, cloudy, partly-cloudy-day, or partly-cloudy-night */
 
 .icon-clear-day, .icon-clear-night, .icon-rain, .icon-snow, .icon-sleet, .icon-wind, .icon-fog, .icon-cloudy, .icon-partly-cloudy-day, .icon-partly-cloudy-night {
-	height: 200px;
+	height: 100px;
 	width: 100%;
 	background-position: center;
-	background-repeat: no-repeat;  
-
+	background-repeat: no-repeat;
 }
+
+.icon-clear-day{
+	background-image: url("https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQ0W1CNFFCkgN2qeQZ50lh_PT8AnCC-hGhbOxHxCOSHHY-mxGbh");
+}
+
+.icon-cloudy{
+	background-image: url("https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQU20OcVuLBeZtURt5sMK0UNqvEOHtYj4wVXa7LSdDWSSrwDeTs")
+}
+
+.icon-rain{
+	background-image: url("https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcR_j64zFI8mjin3KjmnKYyU5YB0d9W_oplxpGrwnNFnHrezV2Gxlg")
+}
+
+.icon-snow{
+	background-image: url("https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQQ248uo5yjUXnO_yy7VzfMtEAWB0tf5GwMAbNUW-_hP3iol7jG")
+}
+
+.fiveDayItem{
+	border: 1px solid black;
+}
+
+#five-day-forecast .card{
+	margin: 0px;
+	padding-top: 5px;
+}
+
+#three-day-forecast-holder{
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
+}
+
+#noMargHeader{
+	margin-top: 0px; 
+}
+/*Status API Training Shop Blog About Pricing*/
+

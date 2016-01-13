@@ -41,52 +41,70 @@ angular.module('starter', ['ionic', 'ngCordova', 'angular-skycons'])
 
 })
 
-//handles request to weather api
-.controller('weatherCtrl', function($scope, $q, $http, $cordovaGeolocation) {
-    $scope.temp;
+/// handles request to weather api - forecast.io
+.controller('weatherCtrl', function($q, $http, $cordovaGeolocation){ 
 
-    var geoPosition = {};
-    $cordovaGeolocation
-     .getCurrentPosition(geoPosition)
-      .then(function (position) {
+  var self = this;
+  self.color = "blue";
 
-     /// gets latitude  and longitude ///
-     var lat  = position.coords.latitude
-     var long = position.coords.longitude
-               
-     /// query the forcast api by latitude  and longitude ///        
-     $q(function(resolve, reject) {
+  var geoPosition = {};
+  $cordovaGeolocation
+    .getCurrentPosition(geoPosition)
+    .then(function (position) {
 
-     /// gets current weather data with an ajax call ///
-     $http.get('/api/forecast/4368a97e3f99d4ca259858c9bbb8389f/'+lat+','+long)
-      .success(
-        function(weatherResponse) {
-        resolve(weatherResponse);
+    ///  gets latitude and longitude
+    var lat  = position.coords.latitude
+    var long = position.coords.longitude
 
-     }, function(error) {  
-        console.log("there was an error");
-        reject(error);
-        }
-      );
-    }).then(function(weather){
+      /// query the forcast api by latitude and longitude         
+      $q(function(resolve, reject) {
+
+      /// gets current weather data
+      $http.get('/api/forecast/4368a97e3f99d4ca259858c9bbb8389f/'+lat+','+long)
+        .success(
+          function(weatherResponse) {
+            resolve(weatherResponse);
+
+          }, function(error) {
+            console.log("there was an error");
+            reject(error);
+          }
+        );
+      }).then(function(weather){
         console.log(" weather ", weather);
 
-      weather.temp = parseInt(weather.currently.temperature);
+      /// Holds current temperature returned from API
+      self.temp = parseInt(weather.currently.temperature)+"°";
 
-      $scope.weatherImage = weather.currently.summary;
+      /// Holds a description of weather returned from  API
+      self.weatherImage = weather.currently.summary;
 
-      $scope.CurrentWeather = {
-        forecast: {
-          icon: "partly-cloudy-night",
-          iconSize: 150,
-          color: "black"
-        }
+      /// Holds current weather icon from API
+      self.CurrentWeather = {
+          forecast: {
+              icon: weather.currently.icon,
+              iconSize: 150,
+              color: self.color
+          }
       };
-    });
 
-      }, 
-       function(err) {
-         console.log("there was an error");
-      });
+       /// Loop through first five days of forecast returned from API and push to self.fiveDayForecast array
+       self.fiveDayForecast = []
+       for(var i = 1; i < 6; i++){
+
+        /// round max temperature to nearest degree
+        weather.daily.data[i].temperatureMax = parseInt(weather.daily.data[i].temperatureMax);
+
+        /// round min temperature to nearest degree
+        weather.daily.data[i].temperatureMin = parseInt(weather.daily.data[i].temperatureMin);
+          self.fiveDayForecast.push(weather.daily.data[i])
+    };
+       console.log("self.fiveDayForecast", self.fiveDayForecast);
+
+  });
+
+     }, function(error) {
+       console.log("there was an error");
+  });
 
 });

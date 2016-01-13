@@ -31,19 +31,25 @@
   <body ng-app="starter">
 
     <ion-pane>
-      <ion-header-bar class="bar-stable">
-        <h1 class="title">Ionic Weather App</h1>
-      </ion-header-bar>
-      <ion-content ng-controller="weatherCtrl as weather">
-      <ion-nav-view>
-          <div id="homePage">
-            <h1>{{ weather.temp }}°F</h1>
-            <h1>{{ weatherImage }}</h1>
-            <skycon icon="CurrentWeather.forecast.icon" size="CurrentWeather.forecast.iconSize"></skycon>
+      <div id="homePage" ng-controller="weatherCtrl as weather">
+        <skycon icon="weather.CurrentWeather.forecast.icon" size="weather.CurrentWeather.forecast.iconSize"></skycon>
+        <h1 id="noMargHeader">{{weather.weatherImage}}</h1>
+        <h1>{{weather.temp}}</h1>
+
+        <div id="three-day-forecast-holder"> 
+          <div class="item item-divider">
+            5 Day Forecast
           </div>
-        </ion-nav-view>
-      </ion-content>
-    </ion-pane>
+        <div id="five-day-forecast" class="row">
+          <div class="col card" ng-repeat="day in weather.fiveDayForecast">                
+             <skycon icon="day.icon" size="65"></skycon>
+              <p>High<br> {{day.temperatureMax}}</p>
+              <p>Low<br> {{day.temperatureMin}}</p>
+          </div>
+         </div>  
+        </div>  
+      </div>
+  </ion-pane>
 
   </body>
 </html>
