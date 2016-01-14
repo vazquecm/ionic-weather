@@ -30,13 +30,23 @@
   </head>
   <body ng-app="starter">
 
-    <ion-pane>
-      <div id="homePage" ng-controller="weatherCtrl as weather">
+    <ion-pane ng-controller="weatherCtrl as weather">
+      <div class="list">
+        <div class="item item-input-inset">
+          <label class="item-input-wrapper">
+            <input type="text" placeholder="Search City or Zip" ng-model="weather.searchQuery">
+          </label>
+          <button class="button button-medium button-royal" ng-click="weather.search()">
+            Search
+          </button>
+        </div>
+      </div>
+      <div id="homePage" >
         <skycon icon="weather.CurrentWeather.forecast.icon" size="weather.CurrentWeather.forecast.iconSize"></skycon>
         <h1 id="noMargHeader">{{weather.weatherImage}}</h1>
+        <h1>{{weather.location}}</h1>
         <h1>{{weather.temp}}</h1>
-
-        <div id="three-day-forecast-holder"> 
+        <img ng-src="{{weather.image}}"> 
           <div class="item item-divider">
             5 Day Forecast
           </div>

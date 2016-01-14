@@ -41,70 +41,69 @@ angular.module('starter', ['ionic', 'ngCordova', 'angular-skycons'])
 
 })
 
-/// handles request to weather api - forecast.io
-.controller('weatherCtrl', function($q, $http, $cordovaGeolocation){ 
+/// handles request to weather api - wunderground.com
+.controller('weatherCtrl', function($http){ 
 
-  var self = this;
-  self.color = "blue";
+  var weather = this;
+  weather.color = "blue";
+  
+  var apiKey = "e0a562410e2f48ee/";
+  var url = "http://api.wunderground.com/api/" + apiKey + "conditions/q/";
 
-  var geoPosition = {};
-  $cordovaGeolocation
-    .getCurrentPosition(geoPosition)
-    .then(function (position) {
+  /// calling to api for their ip address
+  $http.get(url + 'autoip.json').then(parseWUData);
 
-    ///  gets latitude and longitude
-    var lat  = position.coords.latitude
-    var long = position.coords.longitude
+  /// getting long and lat for current position
+  navigator.geolocation.getCurrentPosition(function (geoPosition) {
+    var lat  = geoPosition.coords.latitude;
+    var long = geoPosition.coords.longitude;
 
-      /// query the forcast api by latitude and longitude         
-      $q(function(resolve, reject) {
-
-      /// gets current weather data
-      $http.get('/api/forecast/4368a97e3f99d4ca259858c9bbb8389f/'+lat+','+long)
-        .success(
-          function(weatherResponse) {
-            resolve(weatherResponse);
-
-          }, function(error) {
-            console.log("there was an error");
-            reject(error);
-          }
-        );
-      }).then(function(weather){
-        console.log(" weather ", weather);
-
-      /// Holds current temperature returned from API
-      self.temp = parseInt(weather.currently.temperature)+"°";
-
-      /// Holds a description of weather returned from  API
-      self.weatherImage = weather.currently.summary;
-
-      /// Holds current weather icon from API
-      self.CurrentWeather = {
-          forecast: {
-              icon: weather.currently.icon,
-              iconSize: 150,
-              color: self.color
-          }
-      };
-
-       /// Loop through first five days of forecast returned from API and push to self.fiveDayForecast array
-       self.fiveDayForecast = []
-       for(var i = 1; i < 6; i++){
-
-        /// round max temperature to nearest degree
-        weather.daily.data[i].temperatureMax = parseInt(weather.daily.data[i].temperatureMax);
-
-        /// round min temperature to nearest degree
-        weather.daily.data[i].temperatureMin = parseInt(weather.daily.data[i].temperatureMin);
-          self.fiveDayForecast.push(weather.daily.data[i])
-    };
-       console.log("self.fiveDayForecast", self.fiveDayForecast);
-
+    /// getting data back that includes long and lat 
+    $http.get(url + lat + ',' + long + '.json').then(parseWUData);
   });
 
-     }, function(error) {
-       console.log("there was an error");
-  });
+  /// this function allows searches by city     
+  weather.search = function() {
+    $http
+      .get(url + weather.searchQuery + '.json')
+      .then(parseWUData)
+      .then(function (res) {
+        console.log(res);
+
+        /// this code gets the data of objects by using JSON to string them together turning them into an array
+        var historyArray = JSON.parse(localStorage.getItem('searchHistoryArray')) || [];
+          if (historyArray.indexOf(res.data.current_observation.station_id) === -1) {
+          historyArray.push(res.data.current_observation.station_id);
+          localStorage.setItem('searchHistoryArray', JSON.stringify(historyArray));
+          console.log("stuff");
+
+        }
+
+        var history = JSON.parse(localStorage.getItem('searchHistory')) || {};
+
+        /// if location exist than it overwrites with new station id and if not it creates it...adavantages of using an array in an "if" statement
+        history[res.data.current_observation.display_location.full]= res.data.current_observation.station_id;
+          localStorage.setItem('searchHistory', JSON.stringify(history));
+          console.log("stuff");
+
+      });
+    console.log("are we searching?");
+  }
+  /// this function is getting location, temp, and image data from api to display on DOM
+  function parseWUData (res) {
+    var data = res.data.current_observation;
+    console.log("data", data);
+    weather.location = data.display_location.full;
+    weather.temp = parseInt(data.temp_f);
+    weather.image = data.icon_url;
+    // weather.hiTemp = parseInt(data.)
+    console.log(weather.location);
+    console.log(weather.temp);
+    console.log(weather.image);
+
+    return res;
+
+  };
+
 
 });

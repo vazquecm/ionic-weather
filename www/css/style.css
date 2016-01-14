@@ -13,22 +13,6 @@
 	background-repeat: no-repeat;
 }
 
-.icon-clear-day{
-	background-image: url("https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQ0W1CNFFCkgN2qeQZ50lh_PT8AnCC-hGhbOxHxCOSHHY-mxGbh");
-}
-
-.icon-cloudy{
-	background-image: url("https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQU20OcVuLBeZtURt5sMK0UNqvEOHtYj4wVXa7LSdDWSSrwDeTs")
-}
-
-.icon-rain{
-	background-image: url("https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcR_j64zFI8mjin3KjmnKYyU5YB0d9W_oplxpGrwnNFnHrezV2Gxlg")
-}
-
-.icon-snow{
-	background-image: url("https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQQ248uo5yjUXnO_yy7VzfMtEAWB0tf5GwMAbNUW-_hP3iol7jG")
-}
-
 .fiveDayItem{
 	border: 1px solid black;
 }
