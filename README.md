@@ -1,4 +1,6 @@
-# ionic-weather
+# Nashville Software School - Cohort 11 - Backend
+
+##ionic-weather
 
 A weather app created using the Ionic framework
 
