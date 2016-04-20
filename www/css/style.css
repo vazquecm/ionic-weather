@@ -7,8 +7,8 @@
 /* icons can be clear-day, clear-night, rain, snow, sleet, wind, fog, cloudy, partly-cloudy-day, or partly-cloudy-night */
 
 .icon-clear-day, .icon-clear-night, .icon-rain, .icon-snow, .icon-sleet, .icon-wind, .icon-fog, .icon-cloudy, .icon-partly-cloudy-day, .icon-partly-cloudy-night {
-	height: 100px;
-	width: 100%;
+	height: 400px;
+	width: 400%;
 	background-position: center;
 	background-repeat: no-repeat;
 }
